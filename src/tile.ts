@@ -35,12 +35,9 @@ const darkTiles = router.get('/gnui-dark/:z/:x/:y.png', async (req: Request, res
     console.log('Hitting Cache');
     return res.send(fileContent);
   }
-  const response = await axios.get(
-    'https://api.mapbox.com/styles/v1/grnoc/clbjobgfi002814pbkieyll14/tiles/0/0/0?access_token=pk.eyJ1IjoiZ3Jub2MiLCJhIjoiY2ttMmJvcWt4MXB3cDJucWVxN2ltZ2JoOCJ9.ZKpOkAW4qvdQZoX_Rk18QQ',
-    {
-      responseType: 'stream',
-    },
-  );
+  const response = await axios.get({
+    responseType: 'stream',
+  });
   console.log('Hitting Mapbox');
   response.data.pipe(fs.createWriteStream(imgPath + '/0-0-0.png'));
   return response.data.pipe(res);
